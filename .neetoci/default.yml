@@ -4,7 +4,7 @@ envs:
     value: '-Dmaven.repo.local=.m2'
 global_job_config:
   setup:
-    - sem-version java 17
+    - neetoci-version java 17
     - checkout
     - cache restore
     - 'mvn -q package jmeter:configure -Dmaven.test.skip=true'
