@@ -1,0 +1,22 @@
+version: v1.0
+envs:
+  - key: MAVEN_OPTS
+    value: '-Dmaven.repo.local=.m2'
+global_job_config:
+  setup:
+    - sem-version java 17
+    - checkout
+    - cache restore
+    - 'mvn -q package jmeter:configure -Dmaven.test.skip=true'
+    - mvn -q test-compile -Dmaven.test.skip=true
+    - cache store
+  jobs:
+    - name: CiChecks
+      commands:
+        - mvn test
+        - mvn test -Pintegration-testing
+        - java -version
+        - java -jar target/spring-pipeline-demo.jar > /dev/null &
+        - sleep 20
+        - 'mvn -q jmeter:jmeter'
+        - 'mvn jmeter:results'
