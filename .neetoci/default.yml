@@ -1,5 +1,4 @@
 version: v1.0
-fail_fast: false
 envs:
   - key: MAVEN_OPTS
     value: '-Dmaven.repo.local=.m2'
